@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProdutosApp.Data;
+using ProdutosApp.Repositories;
+using ProdutosApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
 // Dependency Injections
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
 var app = builder.Build();
 
