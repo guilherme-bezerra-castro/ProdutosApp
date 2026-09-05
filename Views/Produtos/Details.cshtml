@@ -1,0 +1,27 @@
+﻿@model ProdutosApp.Models.Produto
+
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<h1>Produto #@Model.Id</h1>
+
+<dl class="row col-md-6">
+    <dt class="col-sm-4">Descrição</dt>
+    <dd class="col-sm-8">@Model.Descricao</dd>
+
+    <dt class="col-sm-4">Quantidade</dt>
+    <dd class="col-sm-8">@Model.Quantidade</dd>
+
+    <dt class="col-sm-4">Valor</dt>
+    <dd class="col-sm-8">@Model.Valor.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</dd>
+
+    <dt class="col-sm-4">Data de Cadastro</dt>
+    <dd class="col-sm-8">@Model.DataCadastro.ToString("dd/MM/yyyy HH:mm")</dd>
+
+    <dt class="col-sm-4">Usuário</dt>
+    <dd class="col-sm-8">@Model.UsuarioCadastro</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Voltar</a>

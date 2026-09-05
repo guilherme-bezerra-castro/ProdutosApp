@@ -1,0 +1,25 @@
+﻿@model ProdutosApp.Models.Produto
+
+@{
+    ViewData["Title"] = "Excluir Produto";
+}
+
+<h1>Excluir Produto</h1>
+
+<div class="alert alert-warning">Tem certeza que deseja excluir este produto?</div>
+
+<dl class="row col-md-6">
+    <dt class="col-sm-4">Descrição</dt>
+    <dd class="col-sm-8">@Model.Descricao</dd>
+
+    <dt class="col-sm-4">Quantidade</dt>
+    <dd class="col-sm-8">@Model.Quantidade</dd>
+
+    <dt class="col-sm-4">Valor</dt>
+    <dd class="col-sm-8">@Model.Valor.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
