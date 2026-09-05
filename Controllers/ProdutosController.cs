@@ -14,9 +14,25 @@ public class ProdutosController : Controller
     }
 
     // GET /Produtos
-    public async Task<IActionResult> Index(string sortColumn = "Id", string sortDirection = "asc")
+    public async Task<IActionResult> Index(
+        string? filtroDescricao,
+        string? filtroUsuario,
+        string sortColumn = "Id",
+        string sortDirection = "asc")
     {
         var produtos = await _produtoService.ObterTodosAsync();
+
+        if (!string.IsNullOrWhiteSpace(filtroDescricao))
+        {
+            produtos = produtos.Where(p =>
+                p.Descricao.Contains(filtroDescricao, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (!string.IsNullOrWhiteSpace(filtroUsuario))
+        {
+            produtos = produtos.Where(p =>
+                p.UsuarioCadastro.Contains(filtroUsuario, StringComparison.OrdinalIgnoreCase));
+        }
 
         produtos = sortColumn switch
         {
@@ -36,6 +52,8 @@ public class ProdutosController : Controller
 
         ViewData["CurrentSort"] = sortColumn;
         ViewData["CurrentDirection"] = sortDirection;
+        ViewData["FiltroDescricao"] = filtroDescricao;
+        ViewData["FiltroUsuario"] = filtroUsuario;
 
         return View(produtos);
     }

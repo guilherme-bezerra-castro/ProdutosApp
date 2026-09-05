@@ -14,6 +14,23 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Produtos</h1>
+    <form asp-action="Index" method="get" class="row g-2 mb-3">
+        <input type="hidden" name="sortColumn" value="@ViewData["CurrentSort"]" />
+        <input type="hidden" name="sortDirection" value="@ViewData["CurrentDirection"]" />
+
+        <div class="col-auto">
+            <input type="text" name="filtroDescricao" value="@ViewData["FiltroDescricao"]"
+                   class="form-control" placeholder="Filtrar por descrição" />
+        </div>
+        <div class="col-auto">
+            <input type="text" name="filtroUsuario" value="@ViewData["FiltroUsuario"]"
+                   class="form-control" placeholder="Filtrar por usuário" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Limpar</a>
+        </div>
+    </form>
     <a asp-action="Create" class="btn btn-primary">+ Novo Produto</a>
 </div>
 
