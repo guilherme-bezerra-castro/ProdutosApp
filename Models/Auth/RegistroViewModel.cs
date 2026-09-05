@@ -1,0 +1,24 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProdutosApp.Models.Auth;
+
+public class RegistroViewModel
+{
+    [Required(ErrorMessage = "O nome é obrigatório.")]
+    [StringLength(100)]
+    public string Nome { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "O e-mail é obrigatório.")]
+    [EmailAddress]
+    public string Email { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "A senha é obrigatória.")]
+    [StringLength(100, MinimumLength = 6, ErrorMessage = "A senha deve ter ao menos 6 caracteres.")]
+    [DataType(DataType.Password)]
+    public string Senha { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Confirme a senha.")]
+    [DataType(DataType.Password)]
+    [Compare(nameof(Senha), ErrorMessage = "As senhas não conferem.")]
+    public string ConfirmarSenha { get; set; } = string.Empty;
+}
