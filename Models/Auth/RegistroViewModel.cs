@@ -15,10 +15,12 @@ public class RegistroViewModel
     [Required(ErrorMessage = "A senha é obrigatória.")]
     [StringLength(100, MinimumLength = 6, ErrorMessage = "A senha deve ter ao menos 6 caracteres.")]
     [DataType(DataType.Password)]
+    [Display(Name = "Senha")]
     public string Senha { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Confirme a senha.")]
     [DataType(DataType.Password)]
     [Compare(nameof(Senha), ErrorMessage = "As senhas não conferem.")]
+    [Display(Name = "Confirmar Senha")]
     public string ConfirmarSenha { get; set; } = string.Empty;
 }
