@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProdutosApp.Models;
 using ProdutosApp.Services;
 
 namespace ProdutosApp.Controllers;
 
+[Authorize]
 public class ProdutosController : Controller
 {
     private readonly IProdutoService _produtoService;
@@ -68,18 +70,17 @@ public class ProdutosController : Controller
     }
 
     // GET /Produtos/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     // POST /Produtos/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Descricao,Quantidade,Valor,UsuarioCadastro")] Produto produto)
+    public async Task<IActionResult> Create([Bind("Descricao,Quantidade,Valor")] Produto produto)
     {
-        if (!ModelState.IsValid) 
-            return View(produto);
+        if (!ModelState.IsValid) return View(produto);
+
+        produto.UsuarioCadastro = User.Identity!.Name!; // preenchido automaticamente pelo login
+        produto.DataCadastro = DateTime.Now;
 
         await _produtoService.CriarAsync(produto);
         TempData["Sucesso"] = "Produto cadastrado com sucesso!";
