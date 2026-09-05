@@ -14,9 +14,29 @@ public class ProdutosController : Controller
     }
 
     // GET /Produtos
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string sortColumn = "Id", string sortDirection = "asc")
     {
         var produtos = await _produtoService.ObterTodosAsync();
+
+        produtos = sortColumn switch
+        {
+            "DataCadastro" => sortDirection == "asc"
+                ? produtos.OrderBy(p => p.DataCadastro)
+                : produtos.OrderByDescending(p => p.DataCadastro),
+            "UsuarioCadastro" => sortDirection == "asc"
+                ? produtos.OrderBy(p => p.UsuarioCadastro)
+                : produtos.OrderByDescending(p => p.UsuarioCadastro),
+            "Valor" => sortDirection == "asc"
+                ? produtos.OrderBy(p => p.Valor)
+                : produtos.OrderByDescending(p => p.Valor),
+            _ => sortDirection == "asc"
+                ? produtos.OrderBy(p => p.Id)
+                : produtos.OrderByDescending(p => p.Id)
+        };
+
+        ViewData["CurrentSort"] = sortColumn;
+        ViewData["CurrentDirection"] = sortDirection;
+
         return View(produtos);
     }
 

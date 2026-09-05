@@ -1,7 +1,15 @@
 ﻿@model IEnumerable<ProdutosApp.Models.Produto>
 
 @{
-    ViewData["Title"] = "Produtos";
+    string ProximaDirecao(string coluna)
+        => (string)ViewData["CurrentSort"] == coluna && (string)ViewData["CurrentDirection"] == "asc"
+            ? "desc" : "asc";
+
+    string Seta(string coluna)
+    {
+        if ((string)ViewData["CurrentSort"] != coluna) return "";
+        return (string)ViewData["CurrentDirection"] == "asc" ? " ▲" : " ▼";
+    }
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -12,12 +20,28 @@
 <table class="table table-striped table-hover align-middle">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Data de Cadastro</th>
-            <th>Usuário</th>
+            <th>
+                <a asp-action="Index" asp-route-sortColumn="Id" asp-route-sortDirection="@ProximaDirecao("Id")" class="text-decoration-none">
+                    ID@Seta("Id")
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortColumn="DataCadastro" asp-route-sortDirection="@ProximaDirecao("DataCadastro")" class="text-decoration-none">
+                    Data de Cadastro@Seta("DataCadastro")
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortColumn="UsuarioCadastro" asp-route-sortDirection="@ProximaDirecao("UsuarioCadastro")" class="text-decoration-none">
+                    Usuário@Seta("UsuarioCadastro")
+                </a>
+            </th>
             <th>Descrição</th>
+            <th>
+                <a asp-action="Index" asp-route-sortColumn="Valor" asp-route-sortDirection="@ProximaDirecao("Valor")" class="text-decoration-none">
+                    Valor@Seta("Valor")
+                </a>
+            </th>
             <th>Quantidade</th>
-            <th>Valor</th>
             <th></th>
         </tr>
     </thead>
