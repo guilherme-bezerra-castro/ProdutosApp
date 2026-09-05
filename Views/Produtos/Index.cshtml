@@ -4,12 +4,6 @@
     string ProximaDirecao(string coluna)
         => (string)ViewData["CurrentSort"] == coluna && (string)ViewData["CurrentDirection"] == "asc"
             ? "desc" : "asc";
-
-    string Seta(string coluna)
-    {
-        if ((string)ViewData["CurrentSort"] != coluna) return "";
-        return (string)ViewData["CurrentDirection"] == "asc" ? " ▲" : " ▼";
-    }
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -39,23 +33,23 @@
         <tr>
             <th>
                 <a asp-action="Index" asp-route-sortColumn="Id" asp-route-sortDirection="@ProximaDirecao("Id")" class="text-decoration-none">
-                    ID@Seta("Id")
+                    ID
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortColumn="DataCadastro" asp-route-sortDirection="@ProximaDirecao("DataCadastro")" class="text-decoration-none">
-                    Data de Cadastro@Seta("DataCadastro")
+                    Data de Cadastro
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortColumn="UsuarioCadastro" asp-route-sortDirection="@ProximaDirecao("UsuarioCadastro")" class="text-decoration-none">
-                    Usuário@Seta("UsuarioCadastro")
+                    Usuário
                 </a>
             </th>
             <th>Descrição</th>
             <th>
                 <a asp-action="Index" asp-route-sortColumn="Valor" asp-route-sortDirection="@ProximaDirecao("Valor")" class="text-decoration-none">
-                    Valor@Seta("Valor")
+                    Valor
                 </a>
             </th>
             <th>Quantidade</th>
